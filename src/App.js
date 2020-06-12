@@ -1,24 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+const champions = require("./assets/static/champions.json");
+
+function Champion({ champion }) {
+  return <span>{champion}</span>;
+}
+
+function ChampionList({ cost, champions }) {
+  return champions.map((champion) => {
+    if (cost === champion.cost)
+      return (
+        <Champion key={champion.championId} champion={champion.name}></Champion>
+      );
+    else return undefined;
+  });
+}
 
 function App() {
+  champions.sort((a, b) => a.cost - b.cost);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <ChampionList key="1" cost={1} champions={champions}></ChampionList>
+      </div>
+      <div>
+        <ChampionList key="2" cost={2} champions={champions}></ChampionList>
+      </div>
+      <div>
+        <ChampionList key="3" cost={3} champions={champions}></ChampionList>
+      </div>
+      <div>
+        <ChampionList key="4" cost={4} champions={champions}></ChampionList>
+      </div>
+      <div>
+        <ChampionList key="5" cost={5} champions={champions}></ChampionList>
+      </div>
     </div>
   );
 }
