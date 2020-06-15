@@ -3,7 +3,13 @@ import React from "react";
 const champions = require("./assets/static/champions.json");
 
 function Champion({ champion }) {
-  return <span>{champion}</span>;
+  const src = `/img/champions/${champion.toLowerCase()}.png`;
+  return (
+    <div>
+      {/* <img src={src} alt="" /> */}
+      <span>{champion}</span>
+    </div>
+  );
 }
 
 function ChampionList({ cost, champions }) {
