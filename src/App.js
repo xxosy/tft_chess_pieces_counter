@@ -3,12 +3,29 @@ import ChampionList from "./components/ChampionList";
 import Deck from "./components/Deck";
 
 function App() {
-  const [deck, setDeck] = useState([]);
+  const [player, setPlayer] = useState([
+    { fieldDeck: [], benchDeck: [] },
+    { fieldDeck: [], benchDeck: [] },
+    { fieldDeck: [], benchDeck: [] },
+    { fieldDeck: [], benchDeck: [] },
+    { fieldDeck: [], benchDeck: [] },
+    { fieldDeck: [], benchDeck: [] },
+    { fieldDeck: [], benchDeck: [] },
+    { fieldDeck: [], benchDeck: [] },
+  ]);
+  const [selectedPlayer, setSelectedPlayer] = useState(0);
 
   return (
     <div style={{ display: "flex" }}>
-      <ChampionList state={{ deck: [deck, setDeck] }}></ChampionList>
-      <Deck deck={deck}></Deck>
+      <ChampionList
+        state={{
+          player: [player, setPlayer],
+          selectedPlayer: [selectedPlayer, setSelectedPlayer],
+        }}
+      ></ChampionList>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <Deck player={player}></Deck>
+      </div>
     </div>
   );
 }
