@@ -1,0 +1,13 @@
+.champion {
+  height: 32px;
+  width: 32px;
+  display: inline-block;
+  background: black;
+  color: white;
+}
+.blue {
+  background: blue;
+}
+.red {
+  background: red;
+}

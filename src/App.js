@@ -13,18 +13,26 @@ function App() {
     { fieldDeck: [], benchDeck: [] },
     { fieldDeck: [], benchDeck: [] },
   ]);
+  console.log(player);
   const [selectedPlayer, setSelectedPlayer] = useState(0);
-
+  const [isFieldDeck, setIsFieldDeck] = useState(true);
   return (
     <div style={{ display: "flex" }}>
       <ChampionList
         state={{
           player: [player, setPlayer],
           selectedPlayer: [selectedPlayer, setSelectedPlayer],
+          isFieldDeck: [isFieldDeck, setIsFieldDeck],
         }}
       ></ChampionList>
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <Deck player={player}></Deck>
+        <Deck
+          state={{
+            player: player,
+            selectedPlayer: [selectedPlayer, setSelectedPlayer],
+            isFieldDeck: [isFieldDeck, setIsFieldDeck],
+          }}
+        ></Deck>
       </div>
     </div>
   );

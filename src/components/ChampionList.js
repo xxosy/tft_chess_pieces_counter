@@ -2,19 +2,26 @@ import React, { useState } from "react";
 import { Divider } from "@material-ui/core";
 
 const champions = require("../assets/static/champions.json");
-function Champion({ champion, state }) {
+function Champion({ champion, index, state }) {
   const {
     player: [player, setPlayer],
   } = { player: useState([]), ...(state || {}) };
 
   const {
-    selecTedPlayer: [selecTedPlayer, setselecTedPlayer],
-  } = { selecTedPlayer: useState(0), ...(state || {}) };
+    selectedPlayer: [selectedPlayer, setSelectedPlayer],
+  } = { selectedPlayer: useState(0), ...(state || {}) };
+
+  const {
+    isFieldDeck: [isFieldDeck, setIsFieldDeck],
+  } = { isFieldDeck: useState(true), ...(state || {}) };
   //   const src = `/img/champions/${champion.toLowerCase()}.png`;
   function addChampion() {
-    player[selecTedPlayer].fieldDeck.push({ champion });
-    setPlayer(player);
-    console.log(player);
+    console.log(selectedPlayer);
+    if (isFieldDeck)
+      player[selectedPlayer].fieldDeck.push({ champion: champion, id: index });
+    else
+      player[selectedPlayer].benchDeck.push({ champion: champion, id: index });
+    setPlayer([...player]);
   }
   return (
     <div style={{ display: "inline-block" }} onClick={() => addChampion()}>
@@ -38,23 +45,14 @@ function Champion({ champion, state }) {
 function Champions({ cost, champions, state }) {
   return champions.map((champion, index) => {
     if (cost === champion.cost)
-      if (index % 5 === 0) {
-        return (
-          <Champion
-            key={champion.championId}
-            champion={champion.name}
-            state={state}
-          ></Champion>
-        );
-      } else {
-        return (
-          <Champion
-            key={champion.championId}
-            champion={champion.name}
-            state={state}
-          ></Champion>
-        );
-      }
+      return (
+        <Champion
+          key={champion.championId}
+          champion={champion.name}
+          index={index}
+          state={state}
+        ></Champion>
+      );
     else return undefined;
   });
 }
