@@ -13,6 +13,7 @@ function Deck({ state }) {
     else setIsFieldDeck(isFieldDeck && deckType);
   }
   return state.player.map((item, index) => {
+    console.log(item);
     let deck = adjustDeck(item.fieldDeck);
 
     return (

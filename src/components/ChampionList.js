@@ -48,7 +48,8 @@ function Champions({ cost, champions, state }) {
       return (
         <Champion
           key={champion.championId}
-          champion={champion.name}
+          champion={champion}
+          cost={cost}
           index={index}
           state={state}
         ></Champion>
