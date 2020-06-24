@@ -7,13 +7,16 @@ function Deck({ state }) {
   const {
     isFieldDeck: [isFieldDeck, setIsFieldDeck],
   } = { isFieldDeck: useState(true), ...(state || {}) };
+  const {
+    isTarget: [isTarget, setIsTarget],
+  } = { isTarget: useState(false), ...(state || {}) };
   function selectPlayerAndDeckType(index, deckType) {
     setSelectedPlayer(selectedPlayer * 0 + index);
+    setIsTarget(isTarget && false);
     if (deckType) setIsFieldDeck(isFieldDeck || deckType);
     else setIsFieldDeck(isFieldDeck && deckType);
   }
   return state.player.map((item, index) => {
-    console.log(item);
     let deck = adjustDeck(item.fieldDeck);
 
     return (
@@ -78,7 +81,7 @@ function adjustDeck(deck) {
     map = map.set(deck[i].id, deck[i].champion);
   }
   for (let i = 0; i < 57; i++) {
-    if (board[i] === 9) result.push(board[i] + "X3");
+    if (board[i] >= 9) result.push(board[i] + "X3");
     else if (board[i] === 8) {
       result.push(map.get(i) + "X2");
       result.push(map.get(i) + "X2");

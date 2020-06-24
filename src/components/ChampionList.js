@@ -14,14 +14,39 @@ function Champion({ champion, index, state }) {
   const {
     isFieldDeck: [isFieldDeck, setIsFieldDeck],
   } = { isFieldDeck: useState(true), ...(state || {}) };
+
+  const {
+    isTarget: [isTarget, setIsTarget],
+  } = { isTarget: useState(false), ...(state || {}) };
+
+  const {
+    currentTarget: [currentTarget, setCurrentTarget],
+    targetChampions: [targetChampions, setTargetChampions],
+  } = {
+    currentTarget: useState(0),
+    ...(state || {}),
+    targetChampions: useState([]),
+    ...(state || {}),
+  };
   //   const src = `/img/champions/${champion.toLowerCase()}.png`;
   function addChampion() {
-    console.log(selectedPlayer);
-    if (isFieldDeck)
-      player[selectedPlayer].fieldDeck.push({ champion: champion, id: index });
-    else
-      player[selectedPlayer].benchDeck.push({ champion: champion, id: index });
-    setPlayer([...player]);
+    console.log(isTarget);
+    if (isTarget) {
+      targetChampions[currentTarget] = { champion };
+      setTargetChampions([...targetChampions]);
+    } else {
+      if (isFieldDeck)
+        player[selectedPlayer].fieldDeck.push({
+          champion: champion,
+          id: index,
+        });
+      else
+        player[selectedPlayer].benchDeck.push({
+          champion: champion,
+          id: index,
+        });
+      setPlayer([...player]);
+    }
   }
   return (
     <div style={{ display: "inline-block" }} onClick={() => addChampion()}>
