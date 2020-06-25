@@ -1,34 +1,31 @@
 import React, { useState } from "react";
 import { Divider } from "@material-ui/core";
+import "./ChampionList.css";
 
 const champions = require("../assets/static/champions.json");
 function Champion({ champion, index, state }) {
   const {
     player: [player, setPlayer],
-  } = { player: useState([]), ...(state || {}) };
-
-  const {
-    selectedPlayer: [selectedPlayer, setSelectedPlayer],
-  } = { selectedPlayer: useState(0), ...(state || {}) };
-
-  const {
-    isFieldDeck: [isFieldDeck, setIsFieldDeck],
-  } = { isFieldDeck: useState(true), ...(state || {}) };
-
-  const {
-    isTarget: [isTarget, setIsTarget],
-  } = { isTarget: useState(false), ...(state || {}) };
-
-  const {
-    currentTarget: [currentTarget, setCurrentTarget],
+    selectedPlayer: [selectedPlayer],
+    isFieldDeck: [isFieldDeck],
+    isTarget: [isTarget],
+    currentTarget: [currentTarget],
     targetChampions: [targetChampions, setTargetChampions],
   } = {
+    player: useState([]),
+    ...(state || {}),
+    selectedPlayer: useState(0),
+    ...(state || {}),
+    isFieldDeck: useState(true),
+    ...(state || {}),
+    isTarget: useState(false),
+    ...(state || {}),
     currentTarget: useState(0),
     ...(state || {}),
     targetChampions: useState([]),
     ...(state || {}),
   };
-  //   const src = `/img/champions/${champion.toLowerCase()}.png`;
+  //   const src = `/img/champions/${champion.name.toLowerCase()}.png`;
   function addChampion() {
     console.log(isTarget);
     if (isTarget) {
@@ -48,20 +45,21 @@ function Champion({ champion, index, state }) {
       setPlayer([...player]);
     }
   }
+  let className = `champion__list__champion cost__${champion.cost}`;
+  let costLabelClassName = `champion__list__cost__label cost__${champion.cost}`;
   return (
     <div style={{ display: "inline-block" }} onClick={() => addChampion()}>
       <div style={{ display: "flex", flexDirection: "column" }}>
         {/* <img src={src} alt="" /> */}
-        <span
-          style={{
-            display: "inline-block",
-            background: "blue",
-            width: "32px",
-            height: "32px",
-          }}
-        ></span>
-        {/* <span>{champion}</span> */}
-        <span>Aaaaaaa</span>
+        <span className={className}>
+          <div className={costLabelClassName}>${champion.cost}</div>
+        </span>
+        {/* <span style={{ fontSize: "10px" }}>
+          {champion.name.length > 8
+            ? champion.name.slice(0, 8) + "..."
+            : champion.name}
+        </span> */}
+        <span>{"Aaaaaaa".slice(0, 5)}...</span>
       </div>
     </div>
   );
@@ -87,8 +85,8 @@ function ChampionList({ state }) {
   champions.sort((a, b) => a.cost - b.cost);
   return (
     <div>
-      <div style={{ backgroundColor: "green", width: "620px" }}>
-        <div>
+      <div className="champion__list__champions">
+        <div className="champion__list__champions__cost">
           <Champions
             key="1"
             cost={1}
@@ -97,7 +95,7 @@ function ChampionList({ state }) {
           ></Champions>
         </div>
         <Divider />
-        <div>
+        <div className="champion__list__champions__cost">
           <Champions
             key="2"
             cost={2}
@@ -105,7 +103,8 @@ function ChampionList({ state }) {
             state={state}
           ></Champions>
         </div>
-        <div>
+        <Divider />
+        <div className="champion__list__champions__cost">
           <Champions
             key="3"
             cost={3}
@@ -113,7 +112,8 @@ function ChampionList({ state }) {
             state={state}
           ></Champions>
         </div>
-        <div>
+        <Divider />
+        <div className="champion__list__champions__cost">
           <Champions
             key="4"
             cost={4}
@@ -121,7 +121,8 @@ function ChampionList({ state }) {
             state={state}
           ></Champions>
         </div>
-        <div>
+        <Divider />
+        <div className="champion__list__champions__cost">
           <Champions
             key="5"
             cost={5}

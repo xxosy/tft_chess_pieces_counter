@@ -33,24 +33,26 @@ function App() {
         }}
       ></ChampionList>
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <Deck
-          state={{
-            player: player,
-            selectedPlayer: [selectedPlayer, setSelectedPlayer],
-            isFieldDeck: [isFieldDeck, setIsFieldDeck],
-            isTarget: [isTarget, setIsTarget],
-          }}
-        ></Deck>
-      </div>
-      <div>
-        <TargetChampions
-          state={{
-            player: [player, setPlayer],
-            isTarget: [isTarget, setIsTarget],
-            targetChampions: [targetChampions, setTagetChampions],
-            currentTarget: [currentTarget, setCurrentTarget],
-          }}
-        ></TargetChampions>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <Deck
+            state={{
+              player: player,
+              selectedPlayer: [selectedPlayer, setSelectedPlayer],
+              isFieldDeck: [isFieldDeck, setIsFieldDeck],
+              isTarget: [isTarget, setIsTarget],
+            }}
+          ></Deck>
+        </div>
+        <div>
+          <TargetChampions
+            state={{
+              player: [player, setPlayer],
+              isTarget: [isTarget, setIsTarget],
+              targetChampions: [targetChampions, setTagetChampions],
+              currentTarget: [currentTarget, setCurrentTarget],
+            }}
+          ></TargetChampions>
+        </div>
       </div>
     </div>
   );

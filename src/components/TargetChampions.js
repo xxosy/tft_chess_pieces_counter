@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-function TargetChampion({ state, targetChampion, index }) {
+import calculateTargetProbability from "../util/probability";
+const probabilitiesByLevel = require("../assets/static/level.json");
+const piece = require("../assets/static/piece.json");
+
+function TargetChampion({ state, targetChampion, index, level }) {
   const {
     currentTarget: [currentTarget, setCurrentTarget],
     isTarget: [isTarget, setIsTarget],
@@ -13,35 +17,18 @@ function TargetChampion({ state, targetChampion, index }) {
     ...(state || {}),
   };
   let name = "-";
-  let positive = 0;
-  let negative = 0;
   let probability = 0;
   if (targetChampion.champion) {
-    player.map((player) => {
-      for (let i = 0; i < player.fieldDeck.length; i++) {
-        if (player.fieldDeck[i]) {
-          if (
-            player.fieldDeck[i].champion.championId ===
-              targetChampion.champion.championId &&
-            player.fieldDeck[i].champion.cost === targetChampion.champion.cost
-          ) {
-            negative++;
-          } else if (
-            player.fieldDeck[i].champion.championId !==
-              targetChampion.champion.championId &&
-            player.fieldDeck[i].champion.cost === targetChampion.champion.cost
-          ) {
-            positive++;
-          }
-        }
-      }
-    });
     name = targetChampion.champion.name;
-    console.log(positive, negative);
-    probability = (18 - negative) / (234 - positive - negative);
-    probability = (probability * 100).toFixed(2);
-    console.log(probability);
+    probability = calculateTargetProbability(
+      player,
+      targetChampion,
+      probabilitiesByLevel[level][targetChampion.champion.cost - 1],
+      piece[targetChampion.champion.cost - 1].numberOfPiece,
+      piece[targetChampion.champion.cost - 1].numberOfType
+    );
   }
+
   return (
     <div
       onClick={() => {
@@ -56,7 +43,7 @@ function TargetChampion({ state, targetChampion, index }) {
         <span>{name}</span>
       </div>
       <div>
-        <span>cost</span>
+        <span></span>
       </div>
       <div>
         <span>{probability}</span>
@@ -64,12 +51,18 @@ function TargetChampion({ state, targetChampion, index }) {
     </div>
   );
 }
+function Probabilities({ level }) {
+  return probabilitiesByLevel[level].map((item) => {
+    return <div>{item}</div>;
+  });
+}
 function TargetChampions({ state }) {
+  const [level, setLevel] = useState(0);
   const {
-    targetChampions: [targetChampions, setTargetChampions],
+    targetChampions: [targetChampions],
     currentTarget: [currentTarget, setCurrentTarget],
     isTarget: [isTarget, setIsTarget],
-    player: [player, setPlayer],
+    player: [player],
   } = {
     targetChampions: useState(0),
     ...(state || {}),
@@ -81,6 +74,7 @@ function TargetChampions({ state }) {
     ...(state || {}),
   };
   let result = [];
+
   targetChampions.map((targetChampion, index) => {
     result.push(
       <TargetChampion
@@ -91,11 +85,31 @@ function TargetChampions({ state }) {
           player: [player],
         }}
         index={index}
+        level={level}
         targetChampion={targetChampion}
       ></TargetChampion>
     );
   });
-  return <div>{result}</div>;
+  return (
+    <div>
+      <div style={{ display: "flex" }}>{result}</div>
+      <div style={{ display: "flex" }}>
+        <button
+          onClick={() => {
+            if (level - 1 > 0) setLevel(level - 1);
+            else if (level - 1 <= 0) setLevel(level);
+          }}
+        ></button>
+        <Probabilities level={level}></Probabilities>
+        <button
+          onClick={() => {
+            if (level + 1 < 8) setLevel(level + 1);
+            else if (level + 1 >= 8) setLevel(level);
+          }}
+        ></button>
+      </div>
+    </div>
+  );
 }
 
 export default TargetChampions;

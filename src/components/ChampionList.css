@@ -1,0 +1,62 @@
+.champion__list__champions {
+  width: 580px;
+  border: #808080 1px solid;
+}
+.champion__list__champions__cost {
+  margin: 0.5em;
+  padding: 0.5em;
+}
+.champion__list__champion {
+  display: inline-block;
+  position: relative;
+  background-color: blue;
+  width: 3em;
+  height: 3em;
+  border: #808080 0.25em solid;
+  border-radius: 4px;
+}
+.cost__1 {
+  border-color: #808080;
+}
+.cost__2 {
+  border-color: #11b288;
+}
+.cost__3 {
+  border-color: #207ac7;
+}
+.cost__4 {
+  border-color: #c440da;
+}
+.cost__5 {
+  border-color: #ffb93b;
+}
+
+.champion__list__cost__label {
+  position: absolute;
+  width: 18px;
+  height: 12px;
+  line-height: 10px;
+  text-shadow: -1px 0 2px #000, 0 1px 2px #000, 1px 0 2px #000, 0 -1px 2px #000;
+  padding-left: 6px;
+  background-color: black;
+  right: 0px;
+  border-radius: 1px;
+  font-size: 11px;
+  color: white;
+  font-weight: 600;
+}
+.champion__list__cost__label.cost__1 {
+  background-color: #808080;
+}
+.champion__list__cost__label.cost__2 {
+  background-color: #11b288;
+}
+.champion__list__cost__label.cost__3 {
+  background-color: #207ac7;
+}
+.champion__list__cost__label.cost__4 {
+  background-color: #c440da;
+}
+.champion__list__cost__label.cost__5 {
+  background-color: #ffb93b;
+}

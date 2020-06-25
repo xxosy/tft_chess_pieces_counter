@@ -20,7 +20,7 @@ function Deck({ state }) {
     let deck = adjustDeck(item.fieldDeck);
 
     return (
-      <div key={index}>
+      <div key={index} style={{ display: "flex" }}>
         <div
           style={{ display: "flex" }}
           onClick={() => {
